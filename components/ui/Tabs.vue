@@ -2,28 +2,22 @@
     <div class="tabs">
         <div
             class="tabs-item"
-            :class="{ 'active' : tabsStore?.tabs[index]?.active }"
+            :class="{ 'active' : tab.name == activeTab }"
             v-for="(tab, index) in tabs"
             :key=index
         >
-            {{ tab.text }}
+            {{ tab.name }}
         </div>
     </div>
 </template>
 
 <script setup>
-import { useTabStore } from '@/stores/tabs.js';
-
-const tabsStore = useTabStore();
 
 const props = defineProps(
 {
-    tabs: Array
+    tabs: Array,
+    activeTab: String
 })
-
-
-
-onMounted(()=> tabsStore.setTabs(props.tabs))
 
 </script>
 
@@ -53,6 +47,7 @@ onMounted(()=> tabsStore.setTabs(props.tabs))
     align-items: center;
 
     &.active { color: white }
+
 
     &:first-child::before
     {

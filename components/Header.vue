@@ -2,18 +2,19 @@
 	<div class="container">
 		<header class="header">
 			<ui-tabs
-				:tabs="tabs"
+				:tabs="tabsStore?.tabs"
+				:active-tab="tabsStore?.activeTab"
 			/>
+
 		</header>
 	</div>
 </template>
 
 <script setup>
-const tabs = ref([
-	{ text:  'Выбор отеля', component: '', active: true  },
-	{ text:  'Ввод даных',  component: '', active: false },
-	{ text:  'Оплата',      component: '', active: false },
-])
+import { useTabStore } from '@/stores/tabs.js';
+
+const tabsStore = useTabStore();
+
 </script>
 
 <style lang='scss'>
