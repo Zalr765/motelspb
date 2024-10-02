@@ -25,7 +25,7 @@ const porps = defineProps({
 <style lang='scss'>
 .ui-button
 {
-    background-color: $black;
+    background-color: #282828;
     color: white;
     border: none;
     border-radius: 18px;
@@ -36,10 +36,6 @@ const porps = defineProps({
     line-height: 19.14px;
     letter-spacing: -0.05em;
 
-    &:hover
-    {
-        color: $black;
-        background-color: $orange;
-    }
+    &:hover { background-color: $orange }
 }
 </style>

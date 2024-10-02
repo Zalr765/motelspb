@@ -37,14 +37,16 @@ const props = defineProps(
 
 .ui-tabs__item
 {
+    display: flex;
+    align-items: center;
     font-size: 16px;
     font-weight: 400;
     line-height: 15.31px;
     letter-spacing: -0.03em;
     color: $gray;
+
+    user-select: none;
     cursor: pointer;
-    display: flex;
-    align-items: center;
 
     &.active { color: white }
 

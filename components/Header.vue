@@ -5,7 +5,6 @@
 				:tabs="tabsStore?.tabs"
 				:active-tab="tabsStore?.activeTab"
 			/>
-
 		</header>
 	</div>
 </template>
@@ -14,7 +13,6 @@
 import { useTabStore } from '@/stores/tabs.js';
 
 const tabsStore = useTabStore();
-
 </script>
 
 <style lang='scss'>
