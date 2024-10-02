@@ -1,18 +1,14 @@
 <template>
-	<div>ssss</div>
 </template>
 
 <script setup>
 // Store
 import { useTabStore } from '@/stores/tabs.js';
-import { onMounted } from 'vue';
 
 const tabsStore = useTabStore();
 
 // Cookie
 const activeTab = useCookie('activeTab', { maxAge: 5002000 });
-
-console.log(activeTab.value);
 
 // OnMounted
 onMounted(() => {

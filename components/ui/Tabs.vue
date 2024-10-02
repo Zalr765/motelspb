@@ -1,7 +1,7 @@
 <template>
-    <div class="tabs">
+    <div class="ui-tabs">
         <div
-            class="tabs-item"
+            class="ui-tabs__item"
             :class="{ 'active' : tab.name == activeTab }"
             v-for="(tab, index) in tabs"
             :key=index
@@ -22,7 +22,7 @@ const props = defineProps(
 </script>
 
 <style lang='scss'>
-.tabs
+.ui-tabs
 {
     height: fit-content;
     width: fit-content;
@@ -35,7 +35,7 @@ const props = defineProps(
     gap: 13px;
 }
 
-.tabs-item
+.ui-tabs__item
 {
     font-size: 16px;
     font-weight: 400;
