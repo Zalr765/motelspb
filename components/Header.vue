@@ -13,6 +13,7 @@
 import { useTabStore } from '@/stores/tabs.js';
 
 const tabsStore = useTabStore();
+
 </script>
 
 <style lang='scss'>
@@ -25,7 +26,7 @@ const tabsStore = useTabStore();
 	position: relative;
 	border-radius: 32px;
 
-	background-image: url('/images/header_bg.png');
+	background-image: url('/images/header_bg.webp');
 	background-size: cover;
     background-repeat: no-repeat;
 	aspect-ratio: 21 / 9;
