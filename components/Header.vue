@@ -3,17 +3,41 @@
 		<header class="header">
 			<ui-tabs
 				:tabs="tabs"
+				:active-tab="activeTab"
 			/>
 		</header>
 	</div>
 </template>
 
 <script setup>
-const tabs = ref([
-	{ text:  'Выбор отеля', component: '', active: true  },
-	{ text:  'Ввод даных',  component: '', active: false },
-	{ text:  'Оплата',      component: '', active: false },
-])
+// Tabs
+const activeTab = useCookie('activeTab', { maxAge: 5002000 });
+const tabs = ref([])
+
+// Onmounted
+onMounted(() => {
+	const tabComponents = import.meta.glob('@/components/HotelRoom/Steps/*.vue');
+
+	for (const path in tabComponents) {
+		tabComponents[path]()
+			.then((module) => {
+
+				if (!tabs.value)
+					tabs.value = [];
+
+					tabs.value.push({
+					component: path,
+					name: module.default.name,
+				});
+
+				if (!activeTab.value)
+				{
+					activeTab.value = module.default.name;
+					tabsStore.activeTab = module.default.name;
+				}
+			})
+	}
+});
 </script>
 
 <style lang='scss'>
@@ -26,7 +50,7 @@ const tabs = ref([
 	position: relative;
 	border-radius: 32px;
 
-	background-image: url('/images/header_bg.png');
+	background-image: url('/images/header_bg.webp');
 	background-size: cover;
     background-repeat: no-repeat;
 	aspect-ratio: 21 / 9;
