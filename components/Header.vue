@@ -2,18 +2,42 @@
 	<div class="container">
 		<header class="header">
 			<ui-tabs
-				:tabs="tabsStore?.tabs"
-				:active-tab="tabsStore?.activeTab"
+				:tabs="tabs"
+				:active-tab="activeTab"
 			/>
 		</header>
 	</div>
 </template>
 
 <script setup>
-import { useTabStore } from '@/stores/tabs.js';
+// Tabs
+const activeTab = useCookie('activeTab', { maxAge: 5002000 });
+const tabs = ref([])
 
-const tabsStore = useTabStore();
+// Onmounted
+onMounted(() => {
+	const tabComponents = import.meta.glob('@/components/HotelRoom/Steps/*.vue');
 
+	for (const path in tabComponents) {
+		tabComponents[path]()
+			.then((module) => {
+
+				if (!tabs.value)
+					tabs.value = [];
+
+					tabs.value.push({
+					component: path,
+					name: module.default.name,
+				});
+
+				if (!activeTab.value)
+				{
+					activeTab.value = module.default.name;
+					tabsStore.activeTab = module.default.name;
+				}
+			})
+	}
+});
 </script>
 
 <style lang='scss'>

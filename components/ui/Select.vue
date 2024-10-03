@@ -31,34 +31,31 @@
 
 <script setup>
 // Variables
-const currentText = ref();
 const isActive = ref(false);
 
 // Props
 const props = defineProps({
     title: String,
-    selectData: Array
+    selectData: Array,
+    modelValue: [String, Number]
 });
 
 // Emits
 const emit = defineEmits(['update:modelValue']);
 
+const currentText = computed(() => {
+    const selectedItem = props.selectData.find(item => item.value === props.modelValue);
+    return selectedItem ? selectedItem.text : null;
+});
+
 // Functions
 const toggleDropdown = () => isActive.value = !isActive.value;
 const closeDropdown = () => isActive.value = false;
 
-
 const selectItem = (item) => {
-    currentText.value = item.text;
     emit('update:modelValue', item.value);
     closeDropdown();
 };
-
-watch(() => props.modelValue, (newValue) => {
-    const selectedItem = props.selectData.find(item => item.value === newValue);
-    if (selectedItem)
-        currentText.value = selectedItem.text;
-}, { immediate: true });
 </script>
 
 <style lang='scss'>
