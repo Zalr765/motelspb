@@ -64,7 +64,8 @@ const selectItem = (item) => {
     height: fit-content;
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 8px;
+    position: relative;
 }
 
 .ui-select-trigger
@@ -81,7 +82,7 @@ const selectItem = (item) => {
 
 .ui-select-trigger__icons
 {
-    transition: .6s ease-in-out all;
+    transition: .5s ease-in-out all;
 
     &.active { transform: rotateX(180deg) }
 }
@@ -115,13 +116,17 @@ const selectItem = (item) => {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-height: 0;
+    position: absolute;
     overflow-y: hidden;
-    // gap: 18px;
     background-color: #282828;
     border-radius: 14px;
-    transition: .6s ease-in-out all;
+    transition: .5s ease-in-out all;
     cursor: pointer;
+    transform-origin: top;
+    transform: scaleY(0);
+    bottom: -52px;
+    max-height: 550px;
+    overflow-y: auto;
 
     span
     {
@@ -141,7 +146,7 @@ const selectItem = (item) => {
 
     &.active
     {
-        max-height: 550px;
+        transform: scaleY(1);
     }
 }
 

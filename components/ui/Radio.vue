@@ -1,20 +1,22 @@
 <template>
     <div class="ui-radio"
         @click="toggleActive"
-        :class="{'active' : isActive}"
-        :style="
-            {
-                width: width,
-                height: height,
-                'border-radius' : borderRadius
-            }"
+        :class="{ 'active': isChecked }"
+        :style="{
+            width: width,
+            height: height,
+            'border-radius': borderRadius
+        }"
     >
         <icons-checkbox />
+        <input
+            type="hidden"
+            @input="$emit('update:value')"
+        />
     </div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
 
 const props = defineProps({
     width: {
@@ -29,23 +31,32 @@ const props = defineProps({
         type: String,
         default: '100%'
     },
-    value: [String, Number],
-    modelValue: [String, Number]
+    value: {
+        type: [String, Number, Boolean],
+        default: false
+    },
+    checked:
+    {
+        type: Boolean,
+        default: false
+    }
 });
 
-// Emits
-const emit = defineEmits(['update:modelValue']);
+// Emit
+const emit = defineEmits(['update:value']);
 
-const isActive = computed(() => {
-    return props.modelValue === props.value;
-});
+const toggleActive = () => emit('update:value', props.checked ? props.value : null);
 
-const toggleActive = () => {
-    emit('update:modelValue', isActive.value ? '' : props.value);
-};
+// Computed
+const isChecked = computed(() => props.checked);
+
+// Watch
+watch(() => props.value, (newValue) => props.checked = newValue === props.value);
+
 </script>
 
 <style lang='scss'>
+
 .ui-radio
 {
     display: flex;
