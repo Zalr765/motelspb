@@ -2,31 +2,65 @@
 	<div class="container">
 		<header class="header">
 			<ui-tabs
-				:tabs="tabs"
+				:tabs="tabsStore?.tabs"
+				:active-tab="activeTab"
 			/>
 		</header>
 	</div>
 </template>
 
 <script setup>
-const tabs = ref([
-	{ text:  'Выбор отеля', component: '', active: true  },
-	{ text:  'Ввод даных',  component: '', active: false },
-	{ text:  'Оплата',      component: '', active: false },
-])
+// Store
+import { useTabStore } from '@/stores/tabs.js';
+const tabsStore = useTabStore();
+
+// Tabs
+const activeTab = useCookie('activeTab', { maxAge: 5002000 });
+
+// OnMounted
+onMounted(async () => {
+    const tabComponents = import.meta.glob('@/components/HotelRoom/Steps/*.vue');
+
+    for (const path in tabComponents) {
+        try
+		{
+            const module = await tabComponents[path]();
+
+            if (!tabsStore.tabs)
+                tabsStore.tabs = [];
+
+            tabsStore.tabs.push({
+                name: module.default.name,
+                component: path,
+            });
+
+            if (!activeTab.value)
+                activeTab.value = module.default.name;
+
+        }
+
+		catch (error)
+		{
+            console.error(`Ошибка загрузки компонента по пути ${path}:`, error);
+        }
+    }
+	console.log(tabsStore.path);
+	tabsStore.setCurrentPath();
+});
+
 </script>
 
 <style lang='scss'>
 .header
 {
 	width: 100%;
-	height: 480px;
-	max-height: 480px;
+	height: 60vh;
+	max-height: 60vh;
 	padding: 20px;
 	position: relative;
 	border-radius: 32px;
 
-	background-image: url('/images/header_bg.png');
+	background-image: url('/images/header_bg.webp');
 	background-size: cover;
     background-repeat: no-repeat;
 	aspect-ratio: 21 / 9;

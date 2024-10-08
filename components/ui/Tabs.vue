@@ -1,34 +1,28 @@
 <template>
-    <div class="tabs">
+    <div class="ui-tabs">
         <div
-            class="tabs-item"
-            :class="{ 'active' : tabsStore?.tabs[index]?.active }"
+            class="ui-tabs__item"
+            :class="{ 'active' : tab.name == activeTab }"
             v-for="(tab, index) in tabs"
             :key=index
         >
-            {{ tab.text }}
+            {{ tab.name }}
         </div>
     </div>
 </template>
 
 <script setup>
-import { useTabStore } from '@/stores/tabs.js';
-
-const tabsStore = useTabStore();
 
 const props = defineProps(
 {
-    tabs: Array
+    tabs: Array,
+    activeTab: String
 })
-
-
-
-onMounted(()=> tabsStore.setTabs(props.tabs))
 
 </script>
 
 <style lang='scss'>
-.tabs
+.ui-tabs
 {
     height: fit-content;
     width: fit-content;
@@ -41,18 +35,21 @@ onMounted(()=> tabsStore.setTabs(props.tabs))
     gap: 13px;
 }
 
-.tabs-item
+.ui-tabs__item
 {
+    display: flex;
+    align-items: center;
     font-size: 16px;
     font-weight: 400;
     line-height: 15.31px;
     letter-spacing: -0.03em;
     color: $gray;
+
+    user-select: none;
     cursor: pointer;
-    display: flex;
-    align-items: center;
 
     &.active { color: white }
+
 
     &:first-child::before
     {
